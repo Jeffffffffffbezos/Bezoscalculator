@@ -1,0 +1,86 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - How many lifetimes would you have to work to be as rich as Jeff Bezos?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-orange-500 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+        <h1 class="text-2xl font-bold text-center mb-4 text-gray-800">How many lifetimes would you have to work to be as rich as Jeff Bezos?</h1>
+        <div id="result" class="text-center text-gray-800 mb-6"></div>
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Joining a Trade Union</h2>
+        <p class="text-gray-600 mb-4">Trade unions advocate for workers’ rights, better wages, and safer conditions. For Amazon workers, joining a union can amplify your voice. Here’s how to get started:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-6">
+            <li>Explore unions like <a href="https://www.amazonworkersinternational.org/" target="_blank" class="text-blue-500 hover:underline">Amazon Workers International</a> or <a href="https://www.uniglobalunion.org/" target="_blank" class="text-blue-500 hover:underline">UNI Global Union</a>, which support Amazon employees globally.</li>
+            <li>Contact local unions in your area (e.g., Teamsters in the U.S., GMB in the UK) to learn about membership and campaigns.</li>
+            <li>Attend organizing meetings or connect with coworkers to discuss unionizing efforts safely and confidentially.</li>
+            <li>Visit <a href="https://www.unionnews.co.uk/" target="_blank" class="text-blue-500 hover:underline">Union News</a> for resources on workers’ rights and union activities.</li>
+        </ul>
+        <p class="text-sm text-gray-500 mb-4">Note: Unionizing can be sensitive. Research local labour laws and protect your privacy when organizing.</p>
+        <a href="index.html" class="block text-center bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition">Back to Calculator</a>
+    </div>
+
+    <script>
+        function calculateLifetimes() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const wage = parseFloat(urlParams.get('wage'));
+            const bezosWealth = 174511000000; // £174.511 billion
+            const yearsPerLifetime = 50;
+
+            const resultDiv = document.getElementById('result');
+            if (!wage || wage <= 0) {
+                resultDiv.innerHTML = '<span class="text-red-500">Invalid wage provided. Please go back and enter a valid wage.</span>';
+                return;
+            }
+
+            const totalLifetimes = (bezosWealth / wage) / yearsPerLifetime;
+            const formattedLifetimes = Math.ceil(totalLifetimes).toLocaleString();
+            resultDiv.innerHTML = `It would take <span class="font-bold">${formattedLifetimes} lifetimes</span> of your yearly wage (£${wage.toLocaleString()}) to match a billionaire’s wealth of £174.5 billion.`;
+        }
+
+        // Run calculation on page load
+        calculateLifetimes();
+    </script>
+</body>
+</html>
