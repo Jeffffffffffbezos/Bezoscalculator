@@ -50,14 +50,11 @@
         <h1 class="text-2xl font-bold text-center mb-4 text-gray-800">How many lifetimes would you have to work to be as rich as Jeff Bezos?</h1>
         <div id="result" class="text-center text-gray-800 mb-6"></div>
         <h2 class="text-xl font-semibold mb-4 text-gray-800">Joining a Trade Union</h2>
-        <p class="text-gray-600 mb-4">Trade unions advocate for workers’ rights, better wages, and safer conditions. For Amazon workers, joining a union can amplify your voice. Here’s how to get started:</p>
-        <ul class="list-disc list-inside text-gray-600 mb-6">
-            <li>Explore unions like <a href="https://www.amazonworkersinternational.org/" target="_blank" class="text-blue-500 hover:underline">Amazon Workers International</a> or <a href="https://www.uniglobalunion.org/" target="_blank" class="text-blue-500 hover:underline">UNI Global Union</a>, which support Amazon employees globally.</li>
-            <li>Contact local unions in your area (e.g., Teamsters in the U.S., GMB in the UK) to learn about membership and campaigns.</li>
-            <li>Attend organizing meetings or connect with coworkers to discuss unionizing efforts safely and confidentially.</li>
-            <li>Visit <a href="https://www.unionnews.co.uk/" target="_blank" class="text-blue-500 hover:underline">Union News</a> for resources on workers’ rights and union activities.</li>
+        <p class="text-gray-600 mb-4">If you work for Amazon in the North West, and you want to organise for better pay and conditions, as well as protecting your rights at work, then you should join the trade union for Amazon workers, GMB, by clicking the link below. If you want more information before joining GMB, then send a quick WhatsApp message to the union’s Amazon organiser (everything you say is confidential and won’t be shared with the company).</p>
+        <ul class="list-none text-center mb-6">
+            <li><a href="https://www.gmb.org.uk/join" target="_blank" class="text-blue-500 hover:underline">Join GMB - the trade union for Amazon workers</a></li>
+            <li class="mt-4"><a href="#" target="_blank" class="text-blue-500 hover:underline">Click here to confidentially message the union organiser for Amazon for free</a></li>
         </ul>
-        <p class="text-sm text-gray-500 mb-4">Note: Unionizing can be sensitive. Research local labour laws and protect your privacy when organizing.</p>
         <a href="index.html" class="block text-center bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition">Back to Calculator</a>
     </div>
 
@@ -76,7 +73,7 @@
 
             const totalLifetimes = (bezosWealth / wage) / yearsPerLifetime;
             const formattedLifetimes = Math.ceil(totalLifetimes).toLocaleString();
-            resultDiv.innerHTML = `It would take <span class="font-bold">${formattedLifetimes} lifetimes</span> of your yearly wage (£${wage.toLocaleString()}) to match a billionaire’s wealth of £174.5 billion.`;
+            resultDiv.innerHTML = `It would take <span class="text-4xl font-bold">${formattedLifetimes} lifetimes</span> of your yearly wage (£${wage.toLocaleString()}) to match the founder of Amazon’s wealth of £174.5 billion.`;
         }
 
         // Run calculation on page load
